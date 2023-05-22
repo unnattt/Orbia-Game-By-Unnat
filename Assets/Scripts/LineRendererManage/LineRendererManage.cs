@@ -15,13 +15,13 @@ public class LineRendererManage : MonoBehaviour
 
     public IEnumerator LineTrigger()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.2f);
         line.widthCurve.AddKey(0.5f,0.5f);
         line.SetPosition(0, startPoint.position);
         line.SetPosition(1, EndPoint.position);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
