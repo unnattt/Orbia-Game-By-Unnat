@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform Player;
     public GameObject Camera;
-    public float Offsets;
+    public float time;
     public float camPosy;
     Vector3 PlayerPos;
 
@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     { 
         PlayerPos = new Vector3(Player.transform.position.x, Player.transform.position.y + camPosy, transform.position.z);
-        Camera.transform.position = Vector3.Lerp(transform.position, PlayerPos, Offsets * Time.deltaTime);
+        Camera.transform.position = Vector3.Lerp(transform.position, PlayerPos, time * Time.deltaTime);
     }
 
 }

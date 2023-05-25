@@ -22,6 +22,15 @@ public class ScreenManager : BaseScreen
         PreviousScreen.HideScreen();
         CurrentScreen.ShowScreen();
 
+        if(screen == ScreenType.MainMenu)
+        {
+            GameController.inst.StopMoveMent();
+        }
+        else if (screen == ScreenType.GamePlayCanvas)
+        {
+            GameController.inst.StartMoveMent();
+        }
+
     }
     
 }

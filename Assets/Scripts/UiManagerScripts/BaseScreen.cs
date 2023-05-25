@@ -30,7 +30,6 @@ public enum ScreenType
    MainMenu,
    SettingPage,
    GameOverPage,
-   LevelSelectionPage,
    GamePlayCanvas,
 
 }
