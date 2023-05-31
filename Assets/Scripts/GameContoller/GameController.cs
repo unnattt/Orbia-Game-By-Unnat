@@ -20,59 +20,49 @@ public class GameController : MonoBehaviour
     {
         inst = this;
     }
-
-    public void StartMoveMent()
+    private void OnEnable()
     {
-        OnMove += PlayerMove;
+        GameStateManager.onStateChange += ChangeState;
     }
 
-    public void StopMoveMent()
+    private void ChangeState(GameStates state)
     {
-        OnMove = null;
-    }
-
-    private void Start()
-    {
-
+        switch (state)
+        {
+            case GameStates.HomeScreen:
+                OnMove -= PlayerMove;
+                break;
+            case GameStates.MainMenu:
+                OnMove -= PlayerMove;
+                break;
+            case GameStates.Setting:
+                OnMove -= PlayerMove;
+                break;
+            case GameStates.GameOver:
+                OnMove -= PlayerMove;
+                break;
+            case GameStates.GamePlay:
+                OnMove += PlayerMove;
+                break;
+        }
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && IsMove)
-        {
-            IsMove = false;
-            Debug.Log("value: " + IsMove);
-            StartCoroutine(PlayerMovefromOnePoint());
-        }
-        //OnMove.Invoke();
+
+        OnMove?.Invoke();
+
     }
 
     void PlayerMove()
     {
-
-        //if (Input.touchCount > 0)
-        //{
-        //    Touch touch = Input.GetTouch(0);
-        //    if(touch.phase == TouchPhase.Ended)
-        //    {
-        //      IsMove = true;               
-        //    }
-        //}
-
-        //if (IsMove == true)
-        {
-            target = ObjectPooling.inst.SpwanList[0];
-            player.transform.position = Vector2.Lerp(player.transform.position, target.transform.position, duration);
-            AngleSetTowardsNextRing();
-        }
-
-        float diff = Vector2.Distance(player.transform.position, target.transform.position);
-        if (diff < 0.2f)
+        if (Input.GetMouseButtonDown(0) && IsMove)
         {
             IsMove = false;
-            player.transform.rotation = target.transform.rotation;
+            StartCoroutine(PlayerMovefromOnePoint());
         }
     }
+
 
     void AngleSetTowardsNextRing()
     {
@@ -83,25 +73,45 @@ public class GameController : MonoBehaviour
 
     IEnumerator PlayerMovefromOnePoint()
     {
-
-        Debug.Log("value1: " + IsMove);
         Vector3 startPos = player.transform.position;
         target = RingSpawner.inst.SpwanList[0];
         float time = 0f;
         while (time < duration)
         {
             player.transform.position = Vector2.Lerp(startPos, target.transform.position, time / duration);
-            Debug.Log(target.transform.position);
             time += Time.deltaTime;
             AngleSetTowardsNextRing();
 
             yield return null;
         }
-        player.transform.position = target.transform.position;
-
-        Debug.Log("value3: " + IsMove);
         IsMove = true;
-        player.transform.rotation = target.transform.rotation;
+        player.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
     }
 
+    
+
 }
+
+//if (Input.touchCount > 0)
+//{
+//    Touch touch = Input.GetTouch(0);
+//    if(touch.phase == TouchPhase.Ended)
+//    {
+//      IsMove = true;               
+//    }
+//}
+
+//if (IsMove == true)
+//    {
+//        target = ObjectPooling.inst.SpwanList[0];
+//        player.transform.position = Vector2.Lerp(player.transform.position, target.transform.position, duration);
+//        AngleSetTowardsNextRing();
+//    }
+
+//    float diff = Vector2.Distance(player.transform.position, target.transform.position);
+//    if (diff < 0.2f)
+//    {
+//        IsMove = false;
+//        player.transform.rotation = target.transform.rotation;
+//    }
+//}

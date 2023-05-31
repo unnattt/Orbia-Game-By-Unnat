@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Setting : MonoBehaviour
+public class Setting : BaseScreen
 {
     [SerializeField] Button backButton;
     [SerializeField] Button MusicOffBtn;
@@ -16,8 +16,6 @@ public class Setting : MonoBehaviour
     [SerializeField] GameObject SOundOn;
     [SerializeField] GameObject SOundOff;
 
-
-
     private void Start()
     {
         backButton.onClick.AddListener(BacktoMenu);
@@ -28,18 +26,9 @@ public class Setting : MonoBehaviour
     }
 
     public void BacktoMenu()
-    {
-        if(ScreenManager.instance.PreviousScreen == ScreenManager.instance.ScreenList[(int)ScreenType.HomeScreen])
-        {
-            ScreenManager.instance.ShowNextScreen(ScreenType.HomeScreen);
-            AudioManager.inst.PlayAudio(AudioManager.AudioName.BackButtonSound);
-        }
-        else if (ScreenManager.instance.PreviousScreen == ScreenManager.instance.ScreenList[(int)ScreenType.MainMenu])
-        {
-            ScreenManager.instance.ShowNextScreen(ScreenType.MainMenu);
-            AudioManager.inst.PlayAudio(AudioManager.AudioName.BackButtonSound);
-        }
-
+    {       
+      ScreenManager.instance.ShowNextScreen(ScreenType.HomeScreen);
+      AudioManager.inst.PlayAudio(AudioManager.AudioName.BackButtonSound);       
     }
 
     public void AudioOn()

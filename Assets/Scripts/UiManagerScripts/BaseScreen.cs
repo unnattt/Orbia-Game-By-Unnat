@@ -5,23 +5,16 @@ using UnityEngine;
 
 public class BaseScreen : MonoBehaviour
 {
-    [HideInInspector] public Canvas canvas;
+    [HideInInspector]
+    public Canvas canvas;
+
+    public ScreenType screenType;
 
     private void Awake()
     {
         canvas = GetComponent<Canvas>();
-    }
-
-    public void ShowScreen()
-    {
-        canvas.enabled = true;
-    }
-
-    public void HideScreen()
-    {
         canvas.enabled = false;
     }
-
 }
 
 public enum ScreenType

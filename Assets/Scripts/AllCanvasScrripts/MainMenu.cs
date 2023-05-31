@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : BaseScreen
 {
     [SerializeField] Button LoadGameNowButton;
     [SerializeField] Button OptionsButton;
@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
         OptionsButton.onClick.AddListener(OptionPop);        
         MainMenuButton.onClick.AddListener(BackMainMenu);
     }
+
     private void Update()
     {
         SaveManager.instance.LoadLastLevelData();
@@ -24,9 +25,7 @@ public class MainMenu : MonoBehaviour
 
     void LoadCurrentLevel()
     {
-        ScreenManager.instance.ShowNextScreen(ScreenType.GamePlayCanvas);
-        GameController.inst.StartMoveMent();
-        
+        ScreenManager.instance.ShowNextScreen(ScreenType.GamePlayCanvas);        
     }
 
     void OptionPop()

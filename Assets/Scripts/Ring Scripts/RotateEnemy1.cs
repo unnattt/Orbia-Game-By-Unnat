@@ -44,7 +44,7 @@ public class RotateEnemy1 : MonoBehaviour
             radius = Mathf.Lerp(startRadius, endRadius, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
-        }
+        }   
         StartCoroutine(ChangeRadius(endRadius, startRadius, 5f));
     }
         //if (radius >= 0.8f)

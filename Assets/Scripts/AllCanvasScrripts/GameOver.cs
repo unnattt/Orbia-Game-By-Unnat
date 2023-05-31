@@ -3,17 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOver : MonoBehaviour
+public class GameOver : BaseScreen
 {
     public Button MainMenuButton;
     public Button RestartGameButton;
-
-    public static GameOver inst;
-
-    private void Awake()
-    {
-        inst = this;
-    }
 
     private void Start()
     {

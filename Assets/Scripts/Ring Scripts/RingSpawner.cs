@@ -26,14 +26,11 @@ public class RingSpawner : MonoBehaviour
 
     public void SpwanerRing()
     {
-
-        Debug.Log(SpwanList.Count);
         GameObject random = Instantiate(RingsObjects[Random.Range(0, RingsObjects.Count)]);
         random.transform.position = RandomSpwanPoint();
         SpwanList.Add(random);
-
-
     }
+
     public Vector2 RandomSpwanPoint()
     {
         float xvalue = Random.Range(-1.8f, 1.8f);

@@ -2,35 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenManager : BaseScreen
+public class ScreenManager : MonoBehaviour
 {
-    public List<BaseScreen> ScreenList;
-    [HideInInspector] public BaseScreen CurrentScreen;
-    [HideInInspector] public BaseScreen PreviousScreen;
+    public BaseScreen[] screens;
+
+    public BaseScreen HomeScreen;
+
     public static ScreenManager instance;
 
     private void Awake()
     {
         instance = this;
-        CurrentScreen = ScreenList[0];
     }
 
-    public void ShowNextScreen(ScreenType screen)
+    private void Start()
     {
-        PreviousScreen = CurrentScreen;
-        CurrentScreen = ScreenList[(int)screen];
-        PreviousScreen.HideScreen();
-        CurrentScreen.ShowScreen();
-
-        if(screen == ScreenType.MainMenu)
-        {
-            GameController.inst.StopMoveMent();
-        }
-        else if (screen == ScreenType.GamePlayCanvas)
-        {
-            GameController.inst.StartMoveMent();
-        }
-
+        HomeScreen.canvas.enabled = true;
     }
-    
+
+    public void ShowNextScreen(ScreenType screenType)
+    {
+        HomeScreen.canvas.enabled = false;
+
+        foreach (BaseScreen baseScreen in screens)
+        {
+            if (baseScreen.screenType == screenType)
+            {
+                baseScreen.canvas.enabled = true;
+                HomeScreen = baseScreen;
+                break;
+            }
+
+        }
+
+        switch (screenType)
+        {
+            case ScreenType.HomeScreen:
+                GameStateManager.inst.ChangeGameState(GameStates.HomeScreen);
+                break;
+            case ScreenType.MainMenu:
+                GameStateManager.inst.ChangeGameState(GameStates.MainMenu);
+                break;
+            case ScreenType.GamePlayCanvas:
+                GameStateManager.inst.ChangeGameState(GameStates.GamePlay);
+                break;
+            case ScreenType.GameOverPage:
+                GameStateManager.inst.ChangeGameState(GameStates.GameOver);
+                break;
+            case ScreenType.SettingPage:
+                GameStateManager.inst.ChangeGameState(GameStates.Setting);
+                break;
+        }
+    }
 }
